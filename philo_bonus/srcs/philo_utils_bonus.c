@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 12:00:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/19 12:30:22 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/19 23:02:12 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo_bonus.h"
@@ -45,12 +45,11 @@ int	clear_table(t_init *init)
 		free((init->phs)[i].local);
 	}
 	sem_close(init->forks);
-	sem_unlink("forks");
+	sem_unlink(SEM_FORKS);
 	sem_close(init->phs->semaphores->printer);
 	sem_unlink(SEM_PRINTER);
-	sem_close(init->phs->semaphores->holder);
-	sem_unlink(SEM_HOLDER);
-	free(init->phs->semaphores);
+//	sem_close(init->phs->semaphores->meals);
+//	sem_unlink(SEM_MEALS);
 	free(init->phs);
 	free(init->args);
 	return (0);

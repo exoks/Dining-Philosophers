@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:29:30 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/19 11:17:47 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/19 22:47:33 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILO_BONUS_H
@@ -70,7 +70,8 @@
 //#         SIMAPHORES         #
 //##############################
 # define SEM_PRINTER "sem_print"
-# define SEM_HOLDER "sem_holder"
+# define SEM_MEALS "sem_meals"
+# define SEM_FORKS "sem_forks"
 
 typedef unsigned long long int ullint;
 
@@ -86,7 +87,7 @@ typedef struct t_args
 typedef struct s_semaphore
 {
 	sem_t			*printer;
-	sem_t			*holder;
+	sem_t			*meals;
 }					t_semaphore;
 
 typedef struct s_local
@@ -101,7 +102,6 @@ typedef struct s_philo
 	t_args			*time;
 	int				(*actions[3])(struct s_philo *);
 	t_local			*local;
-	int				meals;
 	pthread_t		thread;
 	t_semaphore		*semaphores;
 	ullint			last_meal;
@@ -115,6 +115,7 @@ typedef struct s_init
 	t_args			*args;
 	t_philo			*phs;
 	sem_t			*forks;
+	pthread_t		meals_monitor;
 }					t_init;
 
 	/******** PHILO_INIT *********/
@@ -130,6 +131,7 @@ int		start_eating(t_philo *p);
 int		start_thinking(t_philo *p);
 int		start_sleeping(t_philo *p);
 void	*monitoring_live(void *arg);
+void	*meals_monitor(void *arg);
 
 	/********** PHILO_UTILS ******/
 int		take_forks(t_philo *p);

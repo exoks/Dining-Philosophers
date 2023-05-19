@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:40:29 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/19 15:27:31 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/19 23:06:17 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo_bonus.h"
@@ -64,19 +64,18 @@ t_philo	*take_seats_around_table(t_init *init)
 		return (free(init->phs), free(semaphores), NULL);
 	sem_unlink(SEM_PRINTER);
 	semaphores->printer = sem_open(SEM_PRINTER, O_CREAT, 0777, 1);
-	sem_unlink(SEM_HOLDER);
-	semaphores->holder = sem_open(SEM_HOLDER, O_CREAT, 0777, 0);
-//	if (print->print == SEM_FAILED)
-//		return (free(init->phs), free(print), NULL);
-	// need protection
+	sem_unlink(SEM_MEALS);
+	semaphores->meals = sem_open(SEM_MEALS, O_CREAT, 0777, 0);
+	if (semaphores->printer == SEM_FAILED || semaphores->meals == SEM_FAILED)
+		return (free(init->phs), free(semaphores), NULL);
 	i = -1;
 	while (++i < init->args->philos_nbr)
 	{
 		(init->phs)[i].id = i + 1;
 		(init->phs)[i].local = create_local_semaphore(&(init->phs)[i]);
-		// need protection
+		if (!(init->phs)[i].local)
+			return (NULL);
 		(init->phs)[i].time = init->args;
-		(init->phs)[i].meals = 0;
 		(init->phs)[i].semaphores = semaphores;
 		((init->phs)[i].actions)[2 * !((i + 1) % 2)] = &start_eating;
 		((init->phs)[i].actions)[(i + 1) % 2] = &start_sleeping;
@@ -87,26 +86,27 @@ t_philo	*take_seats_around_table(t_init *init)
 
 t_local	*create_local_semaphore(t_philo *p)
 {
-	p->local = malloc(sizeof(t_local));
-	if (!p->local)
+	t_local	*local;
+	
+	local = malloc(sizeof(t_local));
+	if (!local)
 		return (NULL);
-	p->local->name = ft_itoa(p->id);
-	if (!p->local->name)
-		return (free(p->local), NULL);
-	sem_unlink(p->local->name);
-	p->local->sem = sem_open(p->local->name, O_CREAT, 0777, 1);
-	sem_unlink(p->local->name);
-	if (p->local->sem == SEM_FAILED)
-		return (free(p->local->name), free(p->local), NULL);
-	return (p->local);
+	local->name = ft_itoa(p->id);
+	if (!local->name)
+		return (free(local), NULL);
+	sem_unlink(local->name);
+	local->sem = sem_open(local->name, O_CREAT, 0777, 1);
+	if (local->sem == SEM_FAILED)
+		return (free(local->name), free(local), NULL);
+	return (local);
 }
 
 sem_t	*put_forks_on_table(t_init *init)
 {
 	int		i;
 
-	sem_unlink("forks");
-	init->forks = sem_open("forks", O_CREAT, 0777, init->args->philos_nbr);
+	sem_unlink(SEM_FORKS);
+	init->forks = sem_open(SEM_FORKS, O_CREAT, 0777, init->args->philos_nbr);
 	if (init->forks == SEM_FAILED)
 		return (SEM_FAILED);
 	i = -1;
@@ -118,11 +118,12 @@ sem_t	*put_forks_on_table(t_init *init)
 	return (init->forks);
 }
 
+void	*meals_monitor(void *arg);
+
 int	start_simulation(t_philo *phs)
 {
-	int		i;
-	int		status;
-	ullint	start;
+	ullint		start;
+	int			i;
 
 	start = get_current_time() + 200;
 	i = -1;
@@ -135,18 +136,32 @@ int	start_simulation(t_philo *phs)
 		if (phs[i].pid == 0)
 		{
 			live_cycle(&phs[i]);
-			exit(0);
+			exit(1);
 		}
 	}
-	i = -1;
-	while (++i < phs->time->philos_nbr)
-	{
-		waitpid(-1, &status, 0);
-		if (((char *) &status)[1] == DIED)
-			break ;
-	}
+	waitpid(-1, 0, 0);
 	i = -1;
 	while (++i < phs->time->philos_nbr)
 		kill(phs[i].pid, SIGKILL);
 	return (0);
+}
+
+void	*meals_monitor(void *arg)
+{
+	t_philo	*p;
+	int		i;
+	int		max;
+
+	p = (t_philo *) arg;
+	max = p->time->max_meals * p->time->philos_nbr;
+	i = 1;
+	while (++i)
+	{
+		sem_wait(p->semaphores->meals);
+		if (i >= max)
+			break ;
+		usleep(200);
+	}
+	kill(p->pid, SIGKILL);
+	return (NULL);
 }
