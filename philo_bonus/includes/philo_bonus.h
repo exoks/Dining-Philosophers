@@ -6,12 +6,11 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:29:30 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/19 22:47:33 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/20 19:43:36 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
-
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -59,13 +58,7 @@
 //##############################
 # define FALSE 0
 # define TRUE 1
-
-//##############################
-//#       PHILO STATUS         #
-//##############################
-# define DIED 2
-# define ALIVE 3 
-
+# define DIED 0
 //##############################
 //#         SIMAPHORES         #
 //##############################
@@ -73,7 +66,7 @@
 # define SEM_MEALS "sem_meals"
 # define SEM_FORKS "sem_forks"
 
-typedef unsigned long long int ullint;
+typedef unsigned long long int	t_ullint;
 
 typedef struct t_args
 {
@@ -84,11 +77,11 @@ typedef struct t_args
 	int				max_meals;
 }					t_args;
 
-typedef struct s_semaphore
+typedef struct s_general
 {
 	sem_t			*printer;
 	sem_t			*meals;
-}					t_semaphore;
+}					t_general;
 
 typedef struct s_local
 {
@@ -103,8 +96,8 @@ typedef struct s_philo
 	int				(*actions[3])(struct s_philo *);
 	t_local			*local;
 	pthread_t		thread;
-	t_semaphore		*semaphores;
-	ullint			last_meal;
+	t_general		*general;
+	t_ullint		last_meal;
 	sem_t			*right;
 	sem_t			*left;
 	pid_t			pid;
@@ -119,31 +112,30 @@ typedef struct s_init
 }					t_init;
 
 	/******** PHILO_INIT *********/
-t_init	*dining_philosofers_init(t_init *init, int ac, char **av);
-t_args	*get_args(int ac, char **av);
-t_philo	*take_seats_around_table(t_init *init);
-sem_t	*put_forks_on_table(t_init *init);
-int		start_simulation(t_philo *phs);
+t_init		*dining_philosofers_init(t_init *init, int ac, char **av);
+t_args		*get_args(int ac, char **av);
+t_philo		*take_seats_around_table(t_init *init);
+t_local		*create_local_semaphore(t_philo *p);
+sem_t		*put_forks_on_table(t_init *init);
+int			set_actions(t_philo *p);
+int			start_simulation(t_philo *phs);
 
 	/********** ACTIONS **********/
-int		live_cycle(t_philo *p);
-int		start_eating(t_philo *p);
-int		start_thinking(t_philo *p);
-int		start_sleeping(t_philo *p);
-void	*monitoring_live(void *arg);
-void	*meals_monitor(void *arg);
-
-	/********** PHILO_UTILS ******/
-int		take_forks(t_philo *p);
-int		put_forks(t_philo *p);
+int			live_cycle(t_philo *p);
+int			start_eating(t_philo *p);
+int			start_sleeping(t_philo *p);
+int			start_thinking(t_philo *p);
+void		*live_monitor(void *arg);
+void		*meals_monitor(void *arg);
 
 	/*********** Utils ***********/
-int		ft_atoi(char *s);
-char	*ft_itoa(int n);
-ullint	get_current_time();
-int		clear_table(t_init *init);
-void	display_usage_menu(void);
-int		ft_strcmp(char *s1, char *s2);
-int		my_usleep(ullint start, ullint duration);
+int			ft_atoi(char *s);
+char		*ft_itoa(int n);
+t_ullint	get_current_time(void);
+int			clear_table(t_init *init);
+void		display_usage_menu(void);
+int			ft_strcmp(char *s1, char *s2);
+int			my_usleep(t_ullint start, t_ullint duration);
+int			print_action(t_philo *p, char *action);
 
 #endif

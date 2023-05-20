@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:40:29 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/17 13:08:13 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/20 19:24:32 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -38,39 +38,35 @@ t_args	*get_args(int ac, char **av)
 	args->time_to_die = ft_atoi(av[2]);
 	args->time_to_eat = ft_atoi(av[3]);
 	args->time_to_sleep = ft_atoi(av[4]);
-	args->max_meals = -1;
-	if (args->philos_nbr <= 0 || args->time_to_eat < 0
-		|| args->time_to_sleep < 0 || args->time_to_die < 0)
+	args->max_meals = -(av[5] == NULL) + (av[5] != NULL) * ft_atoi(av[5]);
+	if (args->philos_nbr <= 0 || args->time_to_eat < 0 || args->time_to_die < 0
+		|| args->time_to_sleep < 0 || (av[5] && args->max_meals <= 0))
 		return (free(args), NULL);
-	if (av[5])
-	{
-		args->max_meals = ft_atoi(av[5]);
-		if (args->max_meals <= 0)
-			return (free(args), NULL);
-	}
 	return (args);
 }
 
 t_philo	*take_seats_around_table(t_init *init)
 {
 	t_print	*print;
+	t_meal	*meal;
 	int		i;
 
 	init->phs = malloc(sizeof(t_philo) * init->args->philos_nbr);
-	if (!init->phs)
-		return (NULL);
 	print = malloc(sizeof(t_print));
-	if (!print)
-		return (free(init->phs), NULL);
+	meal = malloc(sizeof(t_meal));
+	if (!init->phs || !print || !meal)
+		return (free(init->phs), free(print), free(meal), NULL);
 	print->access = TRUE;
-	pthread_mutex_init(&print->print, 0);
+	pthread_mutex_init(&print->print_mutex, 0);
+	meal->meals = 0;
+	pthread_mutex_init(&meal->meal_mutex, 0);
 	i = -1;
 	while (++i < init->args->philos_nbr)
 	{
 		(init->phs)[i].id = i + 1;
 		(init->phs)[i].time = init->args;
 		(init->phs)[i].print = print;
-		(init->phs)[i].meals = 0;
+		(init->phs)[i].meal = meal;
 		((init->phs)[i].actions)[2 * !((i + 1) % 2)] = &start_eating;
 		((init->phs)[i].actions)[(i + 1) % 2] = &start_sleeping;
 		((init->phs)[i].actions)[1 + ((i + 1) % 2)] = &start_thinking;
@@ -103,8 +99,6 @@ int	start_simulation(t_philo *phs)
 	i = -1;
 	while (++i < phs->time->philos_nbr)
 		pthread_create(&phs[i].thread, 0, live_cycle, &phs[i]);
-	i = -1;
-	while (++i < phs->time->philos_nbr)
-		pthread_join(phs[i].thread, 0);
+	meals_monitor(phs);
 	return (0);
 }

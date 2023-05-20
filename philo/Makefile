@@ -6,14 +6,14 @@
 #    By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/03 15:12:02 by oezzaou           #+#    #+#              #
-#    Updated: 2023/05/17 22:54:45 by oezzaou          ###   ########.fr        #
+#    Updated: 2023/05/20 20:36:33 by oezzaou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 ##################################
 #            COMPILER            #
 ##################################
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror #-fsanitize=thread -g
+CFLAGS		:= -Wall -Wextra -Werror -g -fsanitize=thread
 NAME		:= philo
 PTHREAD_LIB := pthread
 
@@ -43,18 +43,18 @@ all: $(OBJDIR) $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $^ -I $(INCDIR) -o $@
-	@printf "\n%45s\n\n" "<<<<<<<<<<<<< $(NAME) >>>>>>>>>>>>>>"
+	@printf "\n$(GREEN)%45s$(NOCLR)\n\n" "<<<<<<<<<<<<< $(NAME) >>>>>>>>>>>>>>"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
-	@printf "Compiling : $< %25s\n" "===> $@"
+	@printf "$(CYAN)Compiling$(NOCLR) : $< %25s\n" "===> $@"
 
 $(OBJDIR):
 	@mkdir -p $@
 
 clean:
 	@rm -rf $(OBJDIR)
-	@echo "" | awk 'BEGIN{a=0; printf("["); while(a < 50){printf("%c", "#"); system("sleep 0.01");a++}}{print "]\n\n	=> Done Cleaing\n"}'
+	@echo "" | awk 'BEGIN{a=0; printf("$(GREEN)["); while(a < 50){printf("$(RED)%c$(NOCLR)", "#"); system("sleep 0.01");a++}}{print "$(GREEN)]\n\n  |==> $(GREEN)Done Cleaing$(NOCLR).\n"}'
 
 fclean: clean
 	@rm -rf $(NAME)

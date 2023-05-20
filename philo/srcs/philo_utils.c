@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 12:00:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/19 12:36:24 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/20 20:43:31 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -16,6 +16,8 @@ int	ft_atoi(char *s)
 	int		nb;
 	int		i;
 
+	if (!s)
+		return (0);
 	nb = 0;
 	i = -!(*s == '-' || *s == '+');
 	while (s[++i] && s[i] >= '0' && s[i] <= '9')
@@ -48,10 +50,12 @@ int	clear_table(t_init *init)
 	int	i;
 
 	i = -1;
-	while (++i < (int) init->phs->time->philos_nbr)
+	while (++i < init->phs->time->philos_nbr)
 		pthread_mutex_destroy(&(init->forks)[i].fork);
-	pthread_mutex_destroy(&init->phs->print->print);
+//	pthread_mutex_destroy(&init->phs->print->print_mutex);
+	pthread_mutex_destroy(&init->phs->meal->meal_mutex);
 	free(init->phs->print);
+	free(init->phs->meal);
 	free(init->forks);
 	free(init->phs);
 	free(init->args);

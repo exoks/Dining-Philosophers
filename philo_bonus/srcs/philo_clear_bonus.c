@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_bonus.c                                      :+:      :+:    :+:   */
+/*   philo_clear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 15:13:34 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 19:27:11 by oezzaou          ###   ########.fr       */
+/*   Created: 2023/05/20 19:41:09 by oezzaou           #+#    #+#             */
+/*   Updated: 2023/05/20 20:03:54 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo_bonus.h"
 
-int	main(int ac, char **av)
+int	clear_table(t_init *init)
 {
-	t_init			init;
+	int	i;
 
-	if (!dining_philosofers_init(&init, ac, av))
-		return (display_usage_menu(), EXIT_FAILURE);
-	if (init.args->max_meals > 0)
-		pthread_create(&init.meals_monitor, 0, &meals_monitor, init.phs);
-	start_simulation(init.phs);
-	clear_table(&init);
-	return (EXIT_SUCCESS);
+	i = -1;
+	while (++i < init->args->philos_nbr)
+	{
+		sem_close((init->phs)[i].local->sem);
+		sem_unlink((init->phs)[i].local->name);
+		free((init->phs)[i].local->name);
+		free((init->phs)[i].local);
+	}
+	sem_close(init->forks);
+	sem_unlink(SEM_FORKS);
+	sem_close(init->phs->general->printer);
+	sem_unlink(SEM_PRINTER);
+	free(init->phs->general);
+	free(init->phs);
+	free(init->args);
+	return (0);
 }

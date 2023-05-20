@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 12:01:08 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/19 12:36:42 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/20 20:41:34 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -24,16 +24,16 @@ int	my_usleep(t_philo *p, t_ullint start, t_ullint duration)
 
 int	print_action(t_philo *phs, char *action)
 {
-	pthread_mutex_lock(&phs->print->print);
+	pthread_mutex_lock(&phs->print->print_mutex);
 	if (phs->print->access == FALSE)
 	{
-		pthread_mutex_unlock(&phs->print->print);
+		pthread_mutex_unlock(&phs->print->print_mutex);
 		return (FAILURE);
 	}
 	printf(action, get_current_time(), phs->id);
 	if (ft_strcmp(action, DIE) == 0)
 		phs->print->access = FALSE;
-	pthread_mutex_unlock(&phs->print->print);
+	pthread_mutex_unlock(&phs->print->print_mutex);
 	return (SUCCESS);
 }
 
@@ -64,7 +64,7 @@ int	take_fork(t_philo *p, t_fork *fork)
 			break ;
 		}
 		pthread_mutex_unlock(&fork->fork);
-		usleep(100);
+		usleep(200);
 	}
 	pthread_mutex_unlock(&fork->fork);
 	return (0);

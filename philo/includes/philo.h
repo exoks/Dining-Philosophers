@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:29:30 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/17 15:02:11 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/20 21:21:15 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILO_H
@@ -83,9 +83,15 @@ typedef struct t_args
 
 typedef struct s_print
 {
-	pthread_mutex_t	print;
+	pthread_mutex_t	print_mutex;
 	int				access;
 }				t_print;
+
+typedef struct s_meal
+{
+	pthread_mutex_t	meal_mutex;
+	int				meals;
+}					t_meal;
 
 typedef struct s_philo
 {
@@ -93,7 +99,7 @@ typedef struct s_philo
 	t_args			*time;
 	int				(*actions[3])(struct s_philo *);
 	t_print			*print;
-	int				meals;
+	t_meal			*meal;
 	t_ullint		last_meal;
 	pthread_t		thread;
 	t_fork			*right;
@@ -119,6 +125,7 @@ void		*live_cycle(void *args);
 int			start_eating(t_philo *p);
 int			start_thinking(t_philo *p);
 int			start_sleeping(t_philo *p);
+int			meals_monitor(t_philo *p);
 
 	/********** PHILO_UTILS ******/
 int			take_fork(t_philo *p, t_fork *fork);
