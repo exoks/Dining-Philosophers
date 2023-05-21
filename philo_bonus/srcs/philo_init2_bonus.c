@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 12:00:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 19:46:12 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 12:09:48 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo_bonus.h"
@@ -64,15 +64,13 @@ void	*meals_monitor(void *arg)
 {
 	t_philo	*p;
 	int		i;
-	int		max;
 
 	p = (t_philo *) arg;
-	max = p->time->max_meals * p->time->philos_nbr;
 	i = 0;
 	while (++i)
 	{
 		sem_wait(p->general->meals);
-		if (i >= max)
+		if (i == p->time->philos_nbr)
 			break ;
 		usleep(200);
 	}

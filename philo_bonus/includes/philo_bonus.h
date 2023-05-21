@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:29:30 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 19:43:36 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 11:53:33 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILO_BONUS_H
@@ -97,6 +97,7 @@ typedef struct s_philo
 	t_local			*local;
 	pthread_t		thread;
 	t_general		*general;
+	int				meals;
 	t_ullint		last_meal;
 	sem_t			*right;
 	sem_t			*left;

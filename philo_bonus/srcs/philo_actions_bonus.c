@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:45:59 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 21:21:12 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 12:11:17 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo_bonus.h"
@@ -39,9 +39,11 @@ int	start_eating(t_philo *p)
 	sem_post(p->local->sem);
 	print_action(p, EAT);
 	my_usleep(p->last_meal, p->time->time_to_eat);
-	sem_post(p->general->meals);
+	p->meals++;
 	sem_post(p->right);
 	sem_post(p->left);
+	if (p->meals == p->time->max_meals)
+		sem_post(p->general->meals);
 	return (SUCCESS);
 }
 
@@ -78,7 +80,7 @@ void	*live_monitor(void *arg)
 			exit(DIED);
 		}
 		sem_post(p->local->sem);
-		usleep(350);
+		usleep(300);
 	}
 	return (NULL);
 }

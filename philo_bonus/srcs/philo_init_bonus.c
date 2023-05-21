@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:40:29 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 19:57:26 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 12:03:49 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo_bonus.h"
@@ -85,6 +85,7 @@ sem_t	*put_forks_on_table(t_init *init)
 	i = -1;
 	while (++i < init->args->philos_nbr)
 	{
+		(init->phs)[i].meals = 0;
 		(init->phs)[i].right = init->forks;
 		(init->phs)[i].left = init->forks;
 	}
