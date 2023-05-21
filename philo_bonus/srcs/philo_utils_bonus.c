@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:29:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 18:46:06 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 16:12:55 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo_bonus.h"
@@ -30,7 +30,7 @@ t_ullint	get_current_time(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, 0) == 0)
-		return (TO_MS(time.tv_sec, time.tv_usec));
+		return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 	return (0);
 }
 

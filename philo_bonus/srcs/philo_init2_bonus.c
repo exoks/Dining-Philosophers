@@ -6,15 +6,15 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 12:00:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/21 12:09:48 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 17:07:28 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo_bonus.h"
 
 void	display_usage_menu(void)
 {
-	printf("\nNAME : \n%10s\n", PROGRAM_NAME);
-	printf("\nSYNOPSIS : \n%14s %s %s", "./philo_bonus", ARG_1, ARG_2);
+	printf("\nNAME : \n%18s\n", PROGRAM_NAME);
+	printf("\nSYNOPSIS : \n%20s %s %s", "./philo_bonus", ARG_1, ARG_2);
 	printf("%s %s %s\n", ARG_3, ARG_4, ARG_5);
 	printf("\nDESCRIPTION : \n");
 	printf("%31s : %s\n", ARG_1, ARG_1_USAGE);

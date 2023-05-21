@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:29:30 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/21 11:53:33 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 17:02:13 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILO_BONUS_H
@@ -18,7 +18,6 @@
 # include <sys/time.h>
 # include <semaphore.h>
 # include <signal.h>
-# define TO_MS(A, B) (A * 1000) + (B / 1000)
 
 //###############################
 //#            MENU             #
@@ -138,5 +137,5 @@ void		display_usage_menu(void);
 int			ft_strcmp(char *s1, char *s2);
 int			my_usleep(t_ullint start, t_ullint duration);
 int			print_action(t_philo *p, char *action);
-
+int			clear_lg(t_philo *p);
 #endif

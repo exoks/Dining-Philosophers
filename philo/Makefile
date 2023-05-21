@@ -6,14 +6,14 @@
 #    By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/03 15:12:02 by oezzaou           #+#    #+#              #
-#    Updated: 2023/05/20 20:36:33 by oezzaou          ###   ########.fr        #
+#    Updated: 2023/05/21 17:13:53 by oezzaou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 ##################################
 #            COMPILER            #
 ##################################
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS		:= -Wall -Wextra -Werror
 NAME		:= philo
 PTHREAD_LIB := pthread
 
@@ -54,7 +54,7 @@ $(OBJDIR):
 
 clean:
 	@rm -rf $(OBJDIR)
-	@echo "" | awk 'BEGIN{a=0; printf("$(GREEN)["); while(a < 50){printf("$(RED)%c$(NOCLR)", "#"); system("sleep 0.01");a++}}{print "$(GREEN)]\n\n  |==> $(GREEN)Done Cleaing$(NOCLR).\n"}'
+	@echo "" | awk 'BEGIN{a=0; printf("["); while(a < 50){printf("$(GREEN)%c$(NOCLR)", "#"); system("sleep 0.01");a++}}{print "]\n\n  |==> $(GREEN)Done $(RED)Cleaing$(NOCLR).\n"}'
 
 fclean: clean
 	@rm -rf $(NAME)

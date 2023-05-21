@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:45:59 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 20:45:38 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 15:13:32 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -57,23 +57,28 @@ int	start_thinking(t_philo *p)
 
 int	meals_monitor(t_philo *p)
 {
-	int	total;
+	int		total;
 
 	total = p->time->philos_nbr * p->time->max_meals;
 	while (1)
 	{
 		pthread_mutex_lock(&p->meal->meal_mutex);
 		pthread_mutex_lock(&p->print->print_mutex);
-		if (p->time->max_meals > 0 && p->meal->meals >= total)
-			p->print->access = FALSE;
 		if (p->print->access == FALSE)
 		{
 			pthread_mutex_unlock(&p->print->print_mutex);
 			break ;
 		}
 		pthread_mutex_unlock(&p->print->print_mutex);
+		if (p->meal->meals >= total)
+		{
+			pthread_mutex_lock(&p->print->print_mutex);
+			p->print->access = FALSE;
+			pthread_mutex_unlock(&p->print->print_mutex);
+			break ;
+		}
 		pthread_mutex_unlock(&p->meal->meal_mutex);
-		usleep(200);
 	}
-	return (0);
+	pthread_mutex_unlock(&p->meal->meal_mutex);
+	return (SUCCESS);
 }

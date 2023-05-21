@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:40:29 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/21 12:03:49 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 17:03:21 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo_bonus.h"
@@ -66,7 +66,7 @@ t_philo	*take_seats_around_table(t_init *init)
 		(init->phs)[i].id = i + 1;
 		(init->phs)[i].local = create_local_semaphore(&(init->phs)[i]);
 		if (!(init->phs)[i].local)
-			return (free(init->phs), free(general), NULL);
+			return (clear_lg(init->phs), free(init->phs), NULL);
 		(init->phs)[i].time = init->args;
 		(init->phs)[i].general = general;
 		set_actions(&(init->phs)[i]);

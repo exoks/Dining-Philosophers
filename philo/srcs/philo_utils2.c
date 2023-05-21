@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 12:01:08 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 20:41:34 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 15:15:50 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -15,11 +15,15 @@ int	my_usleep(t_philo *p, t_ullint start, t_ullint duration)
 {
 	while (get_current_time() - start < duration)
 	{
+		pthread_mutex_lock(&p->print->print_mutex);
+		if (p->print->access == FALSE)
+			return (pthread_mutex_unlock(&p->print->print_mutex), FALSE);
+		pthread_mutex_unlock(&p->print->print_mutex);
 		if (get_current_time() - p->last_meal >= (t_ullint)p->time->time_to_die)
 			return (print_action(p, DIE));
 		usleep(200);
 	}
-	return (SUCCESS);
+	return (TRUE);
 }
 
 int	print_action(t_philo *phs, char *action)

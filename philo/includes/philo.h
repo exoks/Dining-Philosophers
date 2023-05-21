@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:29:30 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 21:21:15 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 17:09:12 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILO_H
@@ -17,7 +17,6 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
-# define TO_MS(A, B) (A * 1000) + (B / 1000)
 
 //###############################
 //#            MENU             #
@@ -118,7 +117,7 @@ t_init		*dining_philosofers_init(t_init *init, int ac, char **av);
 t_args		*get_args(int ac, char **av);
 t_philo		*take_seats_around_table(t_init *init);
 t_fork		*put_forks_on_table(t_init *init);
-int			start_simulation(t_philo *phs);
+int			start_simulation(t_init *init);
 
 	/********** ACTIONS **********/
 void		*live_cycle(void *args);

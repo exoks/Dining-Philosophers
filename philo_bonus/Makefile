@@ -6,7 +6,7 @@
 #    By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/03 15:12:02 by oezzaou           #+#    #+#              #
-#    Updated: 2023/05/21 12:21:34 by oezzaou          ###   ########.fr        #
+#    Updated: 2023/05/21 16:24:33 by oezzaou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 ##################################
@@ -59,7 +59,7 @@ $(OBJDIR):
 
 clean:
 	@rm -rf $(OBJDIR)
-	@echo "" | awk 'BEGIN{a=0; printf("$(GREEN)["); while(a < 50){printf("$(RED)%c$(NOCLR)", "#"); system("sleep 0.01");a++}}{print "$(GREEN)]$(NOCLR)\n\n  |==> $(GREEN)Done Cleaing$(NOCLR).\n"}'
+	@echo "" | awk 'BEGIN{a=0; printf("["); while(a < 50){printf("$(GREEN)%c$(NOCLR)", "#"); system("sleep 0.01");a++}}{print "]\n\n  |==> $(GREEN)Done $(RED)Cleaing$(NOCLR).\n"}'
 
 fclean: clean
 	@rm -rf $(NAME)

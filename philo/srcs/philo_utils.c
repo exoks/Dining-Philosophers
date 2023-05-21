@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 12:00:48 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 20:43:31 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 16:10:40 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -30,7 +30,7 @@ t_ullint	get_current_time(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, 0) == 0)
-		return (TO_MS(time.tv_sec, time.tv_usec));
+		return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 	return (0);
 }
 
@@ -52,7 +52,7 @@ int	clear_table(t_init *init)
 	i = -1;
 	while (++i < init->phs->time->philos_nbr)
 		pthread_mutex_destroy(&(init->forks)[i].fork);
-//	pthread_mutex_destroy(&init->phs->print->print_mutex);
+	pthread_mutex_destroy(&init->phs->print->print_mutex);
 	pthread_mutex_destroy(&init->phs->meal->meal_mutex);
 	free(init->phs->print);
 	free(init->phs->meal);

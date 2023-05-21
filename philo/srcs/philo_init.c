@@ -6,7 +6,7 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:40:29 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/20 19:24:32 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 15:18:12 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -92,13 +92,17 @@ t_fork	*put_forks_on_table(t_init *init)
 	return (init->forks);
 }
 
-int	start_simulation(t_philo *phs)
+int	start_simulation(t_init *init)
 {
 	int	i;
 
 	i = -1;
-	while (++i < phs->time->philos_nbr)
-		pthread_create(&phs[i].thread, 0, live_cycle, &phs[i]);
-	meals_monitor(phs);
-	return (0);
+	while (++i < init->args->philos_nbr)
+		pthread_create(&(init->phs)[i].thread, 0, live_cycle, &(init->phs)[i]);
+	if (init->args->max_meals > 0)
+		meals_monitor(init->phs);
+	i = -1;
+	while (++i < init->args->philos_nbr)
+		pthread_join((init->phs)[i].thread, 0);
+	return (SUCCESS);
 }
