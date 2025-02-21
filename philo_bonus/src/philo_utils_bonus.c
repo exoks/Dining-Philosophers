@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "philo_bonus.h"
 
+//====<[ ft_atoi: ]>============================================================
 int	ft_atoi(char *s)
 {
 	int		nb;
@@ -25,6 +26,7 @@ int	ft_atoi(char *s)
 	return (nb * ((*s != '-') - (*s == '-')));
 }
 
+//====<[ get_current_time: ]>===================================================
 t_ullint	get_current_time(void)
 {
 	struct timeval	time;
@@ -34,6 +36,7 @@ t_ullint	get_current_time(void)
 	return (0);
 }
 
+//====<[ my_usleep: ]>==========================================================
 int	my_usleep(t_ullint start, t_ullint duration)
 {
 	while (get_current_time() - start < duration)
@@ -41,6 +44,7 @@ int	my_usleep(t_ullint start, t_ullint duration)
 	return (SUCCESS);
 }
 
+//====<[ ft_nb_size: ]>=========================================================
 int	ft_nb_size(long int nb)
 {
 	if (nb)
@@ -48,6 +52,7 @@ int	ft_nb_size(long int nb)
 	return (0);
 }
 
+//====<[ ft_itoa: ]>============================================================
 char	*ft_itoa(int n)
 {
 	char		*str;

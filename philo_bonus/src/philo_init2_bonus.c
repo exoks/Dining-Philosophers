@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "philo_bonus.h"
 
+//====<[ display_usage_menu: ]>=================================================
 void	display_usage_menu(void)
 {
 	printf("\nNAME : \n%18s\n", PROGRAM_NAME);
@@ -27,6 +28,7 @@ void	display_usage_menu(void)
 	printf("\t%s %s\n\n", SUCCESS_ACTION, SUCCESS_REASON);
 }
 
+//====<[ set_actions: ]>========================================================
 int	set_actions(t_philo *p)
 {
 	(p->actions)[2 * !(p->id % 2)] = &start_eating;
@@ -35,6 +37,7 @@ int	set_actions(t_philo *p)
 	return (SUCCESS);
 }
 
+//====<[ print_action: ]>=======================================================
 int	print_action(t_philo *p, char *action)
 {
 	sem_wait(p->general->printer);
@@ -43,6 +46,7 @@ int	print_action(t_philo *p, char *action)
 	return (SUCCESS);
 }
 
+//====<[ create_local_semaphore: ]>=============================================
 t_local	*create_local_semaphore(t_philo *p)
 {
 	t_local	*local;
@@ -60,6 +64,7 @@ t_local	*create_local_semaphore(t_philo *p)
 	return (local);
 }
 
+//====<[ meals_monitor: ]>======================================================
 void	*meals_monitor(void *arg)
 {
 	t_philo	*p;

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "philo_bonus.h"
 
+//====<[ live_cycle: ]>=========================================================
 int	live_cycle(t_philo *p)
 {
 	int	action;
@@ -29,6 +30,7 @@ int	live_cycle(t_philo *p)
 	return (0);
 }
 
+//====<[ start_eating: ]>=======================================================
 int	start_eating(t_philo *p)
 {
 	sem_wait(p->right);
@@ -47,12 +49,14 @@ int	start_eating(t_philo *p)
 	return (SUCCESS);
 }
 
+//====<[ start_thinking: ]>=====================================================
 int	start_thinking(t_philo *p)
 {
 	print_action(p, THINK);
 	return (SUCCESS);
 }
 
+//====<[ start_sleeping: ]>=====================================================
 int	start_sleeping(t_philo *p)
 {
 	t_ullint	time;
@@ -63,6 +67,7 @@ int	start_sleeping(t_philo *p)
 	return (SUCCESS);
 }
 
+//====<[ live_monitor: ]>=======================================================
 void	*live_monitor(void *arg)
 {
 	t_philo		*p;
