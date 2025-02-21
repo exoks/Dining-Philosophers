@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "philo.h"
 
+//====<[ my_usleep: ]>==========================================================
 int	my_usleep(t_philo *p, t_ullint start, t_ullint duration)
 {
 	while (get_current_time() - start < duration)
@@ -26,6 +27,7 @@ int	my_usleep(t_philo *p, t_ullint start, t_ullint duration)
 	return (TRUE);
 }
 
+//====<[ print_action: ]>=======================================================
 int	print_action(t_philo *phs, char *action)
 {
 	pthread_mutex_lock(&phs->print->print_mutex);
@@ -41,6 +43,7 @@ int	print_action(t_philo *phs, char *action)
 	return (SUCCESS);
 }
 
+//====<[ put_forks: ]>==========================================================
 int	put_forks(t_philo *p)
 {
 	pthread_mutex_lock(&p->right->fork);
@@ -52,6 +55,7 @@ int	put_forks(t_philo *p)
 	return (SUCCESS);
 }
 
+//====<[ take_fork: ]>==========================================================
 int	take_fork(t_philo *p, t_fork *fork)
 {
 	while (1)

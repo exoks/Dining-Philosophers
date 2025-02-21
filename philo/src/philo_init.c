@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "philo.h"
 
+//====<[ dining_philosofers_init: ]>============================================
 t_init	*dining_philosofers_init(t_init *init, int ac, char **av)
 {
 	init->args = get_args(ac, av);
@@ -25,6 +26,7 @@ t_init	*dining_philosofers_init(t_init *init, int ac, char **av)
 	return (init);
 }
 
+//====<[ get_args: ]>===========================================================
 t_args	*get_args(int ac, char **av)
 {
 	t_args	*args;
@@ -45,6 +47,7 @@ t_args	*get_args(int ac, char **av)
 	return (args);
 }
 
+//====<[ take_seats_around_table: ]>============================================
 t_philo	*take_seats_around_table(t_init *init)
 {
 	t_print	*print;
@@ -74,6 +77,7 @@ t_philo	*take_seats_around_table(t_init *init)
 	return (init->phs);
 }
 
+//====<[ put_forks_on_table: ]>=================================================
 t_fork	*put_forks_on_table(t_init *init)
 {
 	int	i;
@@ -92,6 +96,7 @@ t_fork	*put_forks_on_table(t_init *init)
 	return (init->forks);
 }
 
+//====<[ start_simulation: ]>===================================================
 int	start_simulation(t_init *init)
 {
 	int	i;

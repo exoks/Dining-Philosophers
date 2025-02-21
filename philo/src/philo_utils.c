@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "philo.h"
 
+//====<[ ft_atoi: ]>============================================================
 int	ft_atoi(char *s)
 {
 	int		nb;
@@ -25,6 +26,7 @@ int	ft_atoi(char *s)
 	return (nb * ((*s != '-') - (*s == '-')));
 }
 
+//====<[ get_current_time: ]>===================================================
 t_ullint	get_current_time(void)
 {
 	struct timeval	time;
@@ -34,6 +36,7 @@ t_ullint	get_current_time(void)
 	return (0);
 }
 
+//====<[ ft_strcmp: ]>==========================================================
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -45,6 +48,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
+//====<[ clear_table: ]>========================================================
 int	clear_table(t_init *init)
 {
 	int	i;
@@ -62,6 +66,7 @@ int	clear_table(t_init *init)
 	return (0);
 }
 
+//====<[ display_usage_menu: ]>=================================================
 void	display_usage_menu(void)
 {
 	printf("\nNAME : \n%10s\n", PROGRAM_NAME);

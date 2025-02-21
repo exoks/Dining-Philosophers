@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "philo.h"
 
+//====<[ live_cycle: ]>=========================================================
 void	*live_cycle(void *args)
 {
 	t_philo			*p;
@@ -25,6 +26,7 @@ void	*live_cycle(void *args)
 	return (NULL);
 }
 
+//====<[ start_eating: ]>=======================================================
 int	start_eating(t_philo *p)
 {
 	take_fork(p, p->right);
@@ -42,6 +44,7 @@ int	start_eating(t_philo *p)
 	return (SUCCESS);
 }
 
+//====<[ start_sleeping: ]>=====================================================
 int	start_sleeping(t_philo *p)
 {
 	if (print_action(p, SLEEP) == FAILURE)
@@ -50,11 +53,13 @@ int	start_sleeping(t_philo *p)
 	return (SUCCESS);
 }
 
+//====<[ start_thinking: ]>=====================================================
 int	start_thinking(t_philo *p)
 {
 	return (print_action(p, THINK));
 }
 
+//====<[ meals_monitor: ]>======================================================
 int	meals_monitor(t_philo *p)
 {
 	int		total;
