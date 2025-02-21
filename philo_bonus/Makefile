@@ -41,7 +41,7 @@ RESET					= \033[1;0m
 
 #===<[ Sources: ]>==============================================================
 PROJECT				:= Philosophers
-NAME					:= philo
+NAME					:= philo_bonus
 PTHREAD_LIB		:= pthread
 INCLUDE				:= -Iinclude
 SRC_DIR				:= src
