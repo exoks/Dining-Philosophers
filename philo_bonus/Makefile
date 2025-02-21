@@ -67,8 +67,8 @@ $(OBJ_DIR):
 	@mkdir -p $@
 
 clean:
-	@echo "" | awk 'BEGIN{a=0; printf("["); while (a < 66)\
-		{printf("$(GREEN)%c$(RESET)", "#"); system("sleep 0.01");a++}} {print "]"}'
+	@echo "" | awk '{a=0; while (a < 69)\
+		{printf("$(GREEN)█"); system("sleep 0.01"); a++}; printf("\n\n")}'
 	@if [ -d $(OBJ_DIR) ]; then\
 		${RM} $(OBJ_DIR);\
 		printf "${GREEN}[OK]${RESET}: ${ORANGE}Cleaning  %-29s${RESET}| ./%s\n"\
@@ -84,7 +84,7 @@ fclean: clean
 		printf "${GREEN}[OK]${RESET}: ${ORANGE}Cleaning  %-29s${RESET}| ./%s\n"\
 					 "... " "$(PROJECT)/$(NAME) ✔️";\
 	else\
-		printf "${RED}[KO]${RESET}: ${BLUE}Not Found %-22s${RESET}| ./%s\n"\
+		printf "${RED}[KO]${RESET}: ${BLUE}Not Found %-29s${RESET}| ./%s\n"\
 					 "..." "$(PROJECT)/$(NAME) ✖️";\
 	fi
 
