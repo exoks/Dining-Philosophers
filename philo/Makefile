@@ -56,11 +56,11 @@ all: signature $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(INCLUDE) $^ -o $@ -l$(PTHREAD_LIB) 
-	@echo "${GREEN}[OK]: ${CYAN}$@ ✔️${RESET}"
+	@echo "${GREEN}[OK] ${CYAN}$@ ✔️${RESET}"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | .create_dir
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-	@printf "$(GREEN)[OK]${RESET}: ${PINK}Compiling${RESET} %-29s| $@\n" "$<"
+	@printf "$(GREEN)[OK]${RESET} ${PINK}Compiling${RESET} %-29s| $@\n" "$<"
 
 $(OBJ_DIR):
 	@mkdir -p $@
@@ -74,20 +74,20 @@ clean:
 		{printf("$(GREEN)█"); system("sleep 0.01"); a++}; printf("\n\n")}'
 	@if [ -d $(OBJ_DIR) ]; then\
 		${RM} $(OBJ_DIR);\
-		printf "${GREEN}[OK]${RESET}: ${ORANGE}Cleaning  %-29s${RESET}| ./%s\n"\
+		printf "${GREEN}[OK]${RESET} ${ORANGE}Cleaning  %-29s${RESET}| ./%s\n"\
 					 "... " "$(PROJECT)/$(OBJ_DIR) ✔️";\
 	else\
-		printf "${RED}[KO]${RESET}: ${BLUE}Not Found %-29s${RESET}| ./%s\n"\
+		printf "${RED}[KO]${RESET} ${BLUE}Not Found %-29s${RESET}| ./%s\n"\
 					 "..." "$(PROJECT)/$(OBJ_DIR) ✖️";\
 	fi
 
 fclean: clean
 	@if [ -f $(NAME) ]; then\
 		${RM} $(NAME);\
-		printf "${GREEN}[OK]${RESET}: ${ORANGE}Cleaning  %-29s${RESET}| ./%s\n"\
+		printf "${GREEN}[OK]${RESET} ${ORANGE}Cleaning  %-29s${RESET}| ./%s\n"\
 					 "... " "$(PROJECT)/$(NAME) ✔️";\
 	else\
-		printf "${RED}[KO]${RESET}: ${BLUE}Not Found %-29s${RESET}| ./%s\n"\
+		printf "${RED}[KO]${RESET} ${BLUE}Not Found %-29s${RESET}| ./%s\n"\
 					 "..." "$(PROJECT)/$(NAME) ✖️";\
 	fi
 
