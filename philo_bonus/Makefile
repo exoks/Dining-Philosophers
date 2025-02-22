@@ -53,7 +53,7 @@ OBJ						:= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(STEMS)))
 SRC						:= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(STEMS)))
 
 #====<[ Rules: ]>===============================================================
-all: $(NAME)
+all: signature $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(INCLUDE) $^ -o $@ -l$(PTHREAD_LIB) 
@@ -66,6 +66,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | .create_dir
 $(OBJ_DIR):
 	@mkdir -p $@
 
+signature:
+	@printf "${GRAY}%19s${RESET}\n" "𓆩♕𓆪"
+	@printf "${GRAY}%s${RESET}\n"		"𓄂 oussama ezzaou𓆃  "
 clean:
 	@echo "" | awk '{a=0; while (a < 69)\
 		{printf("$(GREEN)█"); system("sleep 0.01"); a++}; printf("\n\n")}'
@@ -92,5 +95,5 @@ re: fclean all
 
 .create_dir: $(OBJ_DIR) 
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re signature
 #===============================================================================
