@@ -6,9 +6,10 @@
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:40:29 by oezzaou           #+#    #+#             */
-/*   Updated: 2023/05/21 17:03:21 by oezzaou          ###   ########.fr       */
+/*   Updated: 2023/05/21 15:18:12 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "philo.h"
 
 //====<[ dining_philosofers_init: ]>============================================
@@ -21,7 +22,7 @@ t_init	*dining_philosofers_init(t_init *init, int ac, char **av)
 	if (!init->phs)
 		return (free(init->args), NULL);
 	init->forks = put_forks_on_table(init);
-	if (init->forks == SEM_FAILED)
+	if (!init->forks)
 		return (free(init->args), free(init->phs), NULL);
 	return (init);
 }
@@ -50,75 +51,64 @@ t_args	*get_args(int ac, char **av)
 //====<[ take_seats_around_table: ]>============================================
 t_philo	*take_seats_around_table(t_init *init)
 {
-	t_general	*general;
-	int			i;
+	t_print	*print;
+	t_meal	*meal;
+	int		i;
 
 	init->phs = malloc(sizeof(t_philo) * init->args->philos_nbr);
-	general = malloc(sizeof(t_general));
-	if (!init->phs || !general)
-		return (free(init->phs), free(general), NULL);
-	sem_unlink(SEM_PRINTER);
-	general->printer = sem_open(SEM_PRINTER, O_CREAT, 0777, 1);
-	sem_unlink(SEM_MEALS);
-	general->meals = sem_open(SEM_MEALS, O_CREAT, 0777, 0);
-	if (general->printer == SEM_FAILED || general->meals == SEM_FAILED)
-		return (free(init->phs), free(general), NULL);
+	print = malloc(sizeof(t_print));
+	meal = malloc(sizeof(t_meal));
+	if (!init->phs || !print || !meal)
+		return (free(init->phs), free(print), free(meal), NULL);
+	print->access = TRUE;
+	pthread_mutex_init(&print->print_mutex, 0);
+	meal->meals = 0;
+	pthread_mutex_init(&meal->meal_mutex, 0);
 	i = -1;
 	while (++i < init->args->philos_nbr)
 	{
 		(init->phs)[i].id = i + 1;
-		(init->phs)[i].local = create_local_semaphore(&(init->phs)[i]);
-		if (!(init->phs)[i].local)
-			return (clear_lg(init->phs), free(init->phs), NULL);
 		(init->phs)[i].time = init->args;
-		(init->phs)[i].general = general;
-		set_actions(&(init->phs)[i]);
+		(init->phs)[i].print = print;
+		(init->phs)[i].meal = meal;
+		((init->phs)[i].actions)[2 * !((i + 1) % 2)] = &start_eating;
+		((init->phs)[i].actions)[(i + 1) % 2] = &start_sleeping;
+		((init->phs)[i].actions)[1 + ((i + 1) % 2)] = &start_thinking;
 	}
 	return (init->phs);
 }
 
 //====<[ put_forks_on_table: ]>=================================================
-sem_t	*put_forks_on_table(t_init *init)
+t_fork	*put_forks_on_table(t_init *init)
 {
-	int		i;
+	int	i;
 
-	sem_unlink(SEM_FORKS);
-	init->forks = sem_open(SEM_FORKS, O_CREAT, 0777, init->args->philos_nbr);
-	if (init->forks == SEM_FAILED)
-		return (SEM_FAILED);
+	init->forks = malloc(sizeof(t_fork) * init->args->philos_nbr);
+	if (!init->forks)
+		return (NULL);
 	i = -1;
 	while (++i < init->args->philos_nbr)
 	{
-		(init->phs)[i].meals = 0;
-		(init->phs)[i].right = init->forks;
-		(init->phs)[i].left = init->forks;
+		pthread_mutex_init(&(init->forks)[i].fork, 0);
+		(init->forks)[i].status = AVAILABLE;
+		(init->phs)[i].right = &(init->forks)[i];
+		(init->phs)[i].left = &(init->forks)[(i + 1) % init->args->philos_nbr];
 	}
 	return (init->forks);
 }
 
 //====<[ start_simulation: ]>===================================================
-int	start_simulation(t_philo *phs)
+int	start_simulation(t_init *init)
 {
-	t_ullint	start;
-	int			i;
+	int	i;
 
-	start = get_current_time() + 200;
 	i = -1;
-	while (++i < phs->time->philos_nbr)
-	{
-		phs[i].last_meal = start;
-		phs[i].pid = fork();
-		if (phs[i].pid == -1)
-			return (0);
-		if (phs[i].pid == 0)
-		{
-			live_cycle(&phs[i]);
-			exit(1);
-		}
-	}
-	waitpid(-1, 0, 0);
+	while (++i < init->args->philos_nbr)
+		pthread_create(&(init->phs)[i].thread, 0, live_cycle, &(init->phs)[i]);
+	if (init->args->max_meals > 0)
+		meals_monitor(init->phs);
 	i = -1;
-	while (++i < phs->time->philos_nbr)
-		kill(phs[i].pid, SIGKILL);
-	return (0);
+	while (++i < init->args->philos_nbr)
+		pthread_join((init->phs)[i].thread, 0);
+	return (SUCCESS);
 }

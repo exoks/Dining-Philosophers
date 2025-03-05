@@ -40,7 +40,7 @@ LIGHT_BLUE		= \033[38;5;45m
 RESET					= \033[1;0m
 
 #===<[ Sources: ]>==============================================================
-PROJECT				:= Philosophers
+PROJECT				:= philo_thrd 
 NAME					:= philo
 PTHREAD_LIB		:= pthread
 INCLUDE				:= -Iinclude

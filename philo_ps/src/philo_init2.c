@@ -9,7 +9,7 @@
 /*   Updated: 2023/05/21 17:07:28 by oezzaou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philo_bonus.h"
+#include "philo.h"
 
 //====<[ display_usage_menu: ]>=================================================
 void	display_usage_menu(void)
