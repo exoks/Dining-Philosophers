@@ -46,7 +46,7 @@ PTHREAD_LIB		:= pthread
 INCLUDE				:= -Iinclude
 SRC_DIR				:= src
 OBJ_DIR				:= obj
-STEMS					:= philo philo_init philo_actions philo_init2 philo_utils \
+STEMS					:= philo philo_init philo_actions philo_init2 philo_utils\
                  philo_clear
 
 OBJ						:= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(STEMS)))
