@@ -1,7 +1,7 @@
 /* ************************************************************************** */
-/*                                                                           */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_bonus.h                                      :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oezzaou <oezzaou@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 //====<[ Include guards: ]>=====================================================
-#ifndef PHILO_BONUS_H
-# define PHILO_BONUS_H
+#ifndef __PHILO_H__
+# define __PHILO_H__
 
 //====<[ Headers: ]>============================================================
 # include <unistd.h>
@@ -26,7 +26,7 @@
 //====<[ Macros: ]>=============================================================
 
 //====<[ Macros: menu ]>==========================
-# define PROGRAM_NAME "philo_bonus"
+# define PROGRAM_NAME "philo"
 # define ARG_1 "[number_of_philosophers]"
 # define ARG_2 "[time_to_die]"
 # define ARG_3 "[time_to_eat]"

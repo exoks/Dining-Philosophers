@@ -40,14 +40,14 @@ LIGHT_BLUE		= \033[38;5;45m
 RESET					= \033[1;0m
 
 #===<[ Sources: ]>==============================================================
-PROJECT				:= Philosophers
-NAME					:= philo_bonus
+PROJECT				:= philo_ps
+NAME					:= philo
 PTHREAD_LIB		:= pthread
 INCLUDE				:= -Iinclude
 SRC_DIR				:= src
 OBJ_DIR				:= obj
-STEMS					:= philo_bonus philo_init_bonus philo_actions_bonus \
-								 philo_init2_bonus philo_utils_bonus philo_clear_bonus
+STEMS					:= philo philo_init philo_actions philo_init2 philo_utils \
+                 philo_clear
 
 OBJ						:= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(STEMS)))
 SRC						:= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(STEMS)))
