@@ -15,7 +15,7 @@ This repository contains two versions of the Dining Philosophers problem, each u
 
 Both versions simulate the philosophers' behavior while solving problems like deadlocks, race conditions, and resource allocation. This project is a practical way to learn about multithreading, multiprocessing, and synchronization in programming.
 
-#### **Usage** ####
+#### **Usage :** ####
 1. Clone the repository
 ```sh
 git clone git@github.com:exoks/Dining-Philosophers.git
@@ -27,7 +27,7 @@ make
 ```
   * This will generate the `philo` executable.
 
-#### **Running the Program:** ####
+#### **Running the Program :** ####
 
 ```sh
 ./philo
@@ -39,4 +39,18 @@ make
 
 <br>
 
-> ***NOTE***: The usage menu provides detailed instructions on how to use the `philo` program.
+> **NOTE**  
+> - The usage menu provides detailed instructions on how to use the `philo` program.
+
+#### **CleanUp :** ####
+* Remove object files:
+```sh
+make clean
+```
+
+* Remove all binaries and object files:
+```sh
+make fclean
+```
+
+---
