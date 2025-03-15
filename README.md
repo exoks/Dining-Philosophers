@@ -44,6 +44,26 @@ make
     <img src="https://github.com/user-attachments/assets/dafa483b-0eaf-4c13-9c03-6d7a3869065d">
 </div>
 
+```bash
+./philo 4 400 100 100
+```
+
+> INFO :   
+> - number_of_philosophers : 4
+> - time_to_die   : 400
+> - time_to_eat   : 100
+> - time_to_sleep : 100
+
+* Output : 
+<div>
+  <img width="1000" src="https://github.com/user-attachments/assets/9e659552-6967-4828-8eaf-295cb86488c5" />
+</div>   
+
+<br>
+
+> NOTE   
+> In this example, the simulation **WILL NOT** end.
+
 ### **CleanUp :** ###
 * Remove object files:
 ```sh
