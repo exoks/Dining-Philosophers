@@ -40,10 +40,6 @@ make
 > - The usage menu provides detailed instructions on how to use the `philo` program.
 
 #### **Example :** ####
-<div align="center">
-    <img src="https://github.com/user-attachments/assets/dafa483b-0eaf-4c13-9c03-6d7a3869065d">
-</div>
-
 ```bash
 ./philo 4 400 100 100
 ```
@@ -63,6 +59,7 @@ make
 
 > NOTE   
 > - In this example, the simulation **WILL NOT** end.
+> <img width="600" src="https://github.com/user-attachments/assets/f47476d3-96ec-407b-8990-7ec574c68e8e">
 
 ### **CleanUp :** ###
 * Remove object files:
