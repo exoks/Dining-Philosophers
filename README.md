@@ -48,7 +48,7 @@ make
 ./philo 4 400 100 100
 ```
 
-> INFO :   
+> INFO    
 > - number_of_philosophers : 4
 > - time_to_die   : 400
 > - time_to_eat   : 100
@@ -62,7 +62,7 @@ make
 <br>
 
 > NOTE   
-> In this example, the simulation **WILL NOT** end.
+> - In this example, the simulation **WILL NOT** end.
 
 ### **CleanUp :** ###
 * Remove object files:
