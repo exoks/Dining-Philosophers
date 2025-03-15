@@ -1,8 +1,6 @@
-<div>
-  <img src="https://github.com/user-attachments/assets/1dce6b48-eb42-4fcd-aae8-6a45d838fbaa" width="1000" />
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/fa633d2f-052f-4786-a78a-15dbc62e5324" width="900" />
 </div>
-
-# **Dining-Philosophers** #
 
 This project introduces fundamental concepts of **multithreading**, **synchronization** and concurrency, It simulates the famous ***dining philosophers problem***, which explores **resource allocation**, **deadlocks**, and **race conditions** in concurrent programming.
 
@@ -38,10 +36,13 @@ make
   <img width="1000" alt="Image" src="https://github.com/user-attachments/assets/a9ae86cf-d087-4d5a-a2f3-be6d0c303632"/>
 </div>
 
-<br>
-
 > **NOTE**  
 > - The usage menu provides detailed instructions on how to use the `philo` program.
+
+#### **Example :** ####
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/dafa483b-0eaf-4c13-9c03-6d7a3869065d">
+</div>
 
 ### **CleanUp :** ###
 * Remove object files:
